@@ -33,6 +33,12 @@ jobs:
       run: npm ci
       working-directory: ./themes/tella
 
+    - name: Change baseURL
+      if: ${{ github.ref == 'refs/heads/develop' }}
+      run: |
+        sed -i -e '/^baseURL/d' config.toml
+        sed -i -e '1i baseURL = "https://yamatolab.github.io/yamato-lab"' config.toml
+
     - name: Build
       run: hugo --minify -d public/yamato-lab
 
